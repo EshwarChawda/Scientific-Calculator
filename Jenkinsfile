@@ -64,6 +64,8 @@ pipeline {
                         pip install docker --break-system-packages
                         '''
 
+                        sh 'ansible-galaxy collection install community.docker --force'
+
                         // Run the playbook
                         sh 'ansible-playbook deploy_calculator.yml'
                     } catch (Exception e) {
