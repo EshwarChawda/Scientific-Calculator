@@ -49,8 +49,19 @@ pipeline {
         }
         stage('Remove Docker Local Image') {
             steps {
-                sh 'docker stop scientific-calculator'
-                sh 'docker rm scientific-calculator'
+                script {
+                    def containerName = 'scientific-calculator'
+                    def result = sh(script: "docker ps -a --filter \"name=${containerName}\" --format '{{.Names}}'", returnStdout: true).trim()
+
+                    if (result == containerName) {
+                        echo "Docker container '${containerName}' exists."
+                        sh 'docker stop scientific-calculator'
+                        sh 'docker rm scientific-calculator'
+                    } else {
+                        echo "Docker container '${containerName}' does not exist."
+                    }
+                }
+
                 sh 'docker rmi eshwarchawda/scientific-calculator:latest'
             }
         }
