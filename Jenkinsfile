@@ -42,14 +42,14 @@ pipeline {
         }
         stage('Docker Push') {
             steps {
-                withDockerRegistry([credentialsId: '545029ae-9452-4e35-a1b2-02469129502d', url: 'https://index.docker.io/v1/']) {
+                withDockerRegistry([credentialsId: '889830cd-89f3-4dbc-9a21-83dae639e2eb', url: 'https://index.docker.io/v1/']) {
                     sh 'docker push eshwarchawda/scientific-calculator:latest'
                 }
             }
         }
         stage('Remove Docker Local Image') {
                     steps {
-                        withDockerRegistry([credentialsId: '545029ae-9452-4e35-a1b2-02469129502d', url: 'https://index.docker.io/v1/']) {
+                        withDockerRegistry([credentialsId: '889830cd-89f3-4dbc-9a21-83dae639e2eb', url: 'https://index.docker.io/v1/']) {
                             sh 'docker rmi eshwarchawda/scientific-calculator:latest'
                         }
                     }
