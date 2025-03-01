@@ -61,7 +61,7 @@ pipeline {
                         // Install Docker SDK before running playbook
                         sh '''
                         echo "Installing Docker SDK for Python..."
-                        pip3 install docker
+                        pip install package_name --break-system-packages
                         '''
 
                         // Run the playbook
