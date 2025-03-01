@@ -1,0 +1,16 @@
+- hosts: localhost
+  vars:
+    ansible_python_interpreter: /usr/bin/python3
+  tasks:
+    - name: Pull Docker image
+      docker_image:
+        name: eshwarchawda/scientific-calculator:latest
+        source: pull
+
+    - name: Run calculator container
+      docker_container:
+        name: scientific-calculator
+        image: eshwarchawda/scientific-calculator:latest
+        state: started
+        ports:
+          - "8085:8080"
