@@ -48,25 +48,16 @@ pipeline {
             }
         }
         stage('Remove Docker Local Image') {
-                    steps {
-                        withDockerRegistry([credentialsId: '889830cd-89f3-4dbc-9a21-83dae639e2eb', url: 'https://index.docker.io/v1/']) {
-                            sh 'docker rmi eshwarchawda/scientific-calculator:latest'
-                        }
-                    }
-                }
+            steps {
+                sh 'docker stop scientific-calculator'
+                sh 'docker rm scientific-calculator'
+                sh 'docker rmi eshwarchawda/scientific-calculator:latest'
+            }
+        }
         stage('Deploy with Ansible') {
             steps {
                 script {
                     try {
-                        // Install Docker SDK before running playbook
-                        sh '''
-                        echo "Installing Docker SDK for Python..."
-                        pip install docker --break-system-packages
-                        '''
-
-                        sh 'ansible-galaxy collection install community.docker --force'
-
-                        // Run the playbook
                         sh 'ansible-playbook deploy_calculator.yml'
                     } catch (Exception e) {
                         error("Ansible Deployment failed: ${e}")
