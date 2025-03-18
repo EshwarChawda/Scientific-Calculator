@@ -47,7 +47,7 @@ pipeline {
                 }
             }
         }
-        stage('Remove Docker Local Image') {
+        stage('Remove Docker Local container') {
             steps {
                 script {
                     def containerName = 'scientific-calculator'
